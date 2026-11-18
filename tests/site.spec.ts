@@ -1,5 +1,18 @@
 import { expect, test } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'English', exact: true }).click();
+});
+
+test('Portuguese is the default for new visitors', async ({ page }) => {
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'pt');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Uma pequena pausa.Cheia de alma.');
+  await expect(page.getByRole('button', { name: 'Português', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});
+
 test('loads every image, has no runtime errors or horizontal overflow', async ({ page }, testInfo) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));

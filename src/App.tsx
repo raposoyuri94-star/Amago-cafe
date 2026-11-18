@@ -56,7 +56,7 @@ function ItemDialog({ item, language, onClose }: { item: MenuItem; language: Lan
 
 export default function App() {
   const [language, setLanguage] = useState<Language>(() => {
-    try { return localStorage.getItem('amago-language') === 'pt' ? 'pt' : 'en'; } catch { return 'en'; }
+    try { return localStorage.getItem('amago-language-v2') === 'en' ? 'en' : 'pt'; } catch { return 'pt'; }
   });
   const [mobileOpen, setMobileOpen] = useState(false);
   const [category, setCategory] = useState<Category>('coffee');
@@ -70,7 +70,7 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = language;
     document.title = language === 'en' ? 'Âmago Café — A little pause. A lot of soul.' : 'Âmago Café — Uma pequena pausa. Cheia de alma.';
-    try { localStorage.setItem('amago-language', language); } catch { /* Storage may be unavailable in private browsers. */ }
+    try { localStorage.setItem('amago-language-v2', language); } catch { /* Storage may be unavailable in private browsers. */ }
   }, [language]);
 
   useEffect(() => {
