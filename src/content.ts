@@ -35,7 +35,7 @@ export const copy = {
       ['How can I check opening hours?', 'Check with our team using the contact link in the “Find us” section.'],
       ['Where is Âmago?', 'You’ll find us at Avenida Mártires da Machava, 826, in Maputo. Use “Get directions” to plan your route in Google Maps.'],
     ],
-    footer: 'Âmago Café, Maputo', backTop: 'Back to top', rights: '',
+    footer: 'Âmago Café, Maputo', backTop: 'Back to top', rights: 'Made by Nexzo_agency',
   },
   pt: {
     skip: 'Saltar para o conteúdo', nav: ['A nossa essência', 'O menu', 'Onde estamos'],
@@ -68,6 +68,6 @@ export const copy = {
       ['Como posso confirmar o horário?', 'Confirme com a equipa através do contacto na secção «Onde estamos».'],
       ['Onde fica o Âmago?', 'Estamos na Avenida Mártires da Machava, 826, em Maputo. Use “Como chegar” para planear o percurso no Google Maps.'],
     ],
-    footer: 'Âmago Café, Maputo', backTop: 'Voltar ao início', rights: '',
+    footer: 'Âmago Café, Maputo', backTop: 'Voltar ao início', rights: 'Made by Nexzo_agency',
   },
 } as const;
