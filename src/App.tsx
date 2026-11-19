@@ -48,7 +48,7 @@ export default function App() {
       </nav>
       <div className="header-actions">
         <div className="language-switch" aria-label={language === 'en' ? 'Language' : 'Idioma'}>{(['en', 'pt'] as const).map(lang => <button key={lang} onClick={() => { setLanguage(lang); setMobileOpen(false); }} aria-pressed={language === lang} aria-label={lang === 'en' ? 'English' : 'Português'}>{lang.toUpperCase()}</button>)}</div>
-        <a className="header-hello" href={instagramUrl} target="_blank" rel="noreferrer">{t.hello}</a>
+        <a className="header-hello" href={`${isGallery ? '/' : ''}#visit`}>{t.hello}</a>
         <button ref={mobileToggleRef} className="icon-button mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="main-navigation" aria-label={mobileOpen ? t.closeMenu : t.openMenu}>{mobileOpen ? <X /> : <Menu />}</button>
       </div>
     </header>
@@ -75,9 +75,9 @@ export default function App() {
 
       <RealMenu language={language} />
 
-      <section className="space-section" id="space" aria-labelledby="space-title"><div className="space-photo"><img src="/images/amago-entrance.png" alt={language === 'en' ? 'A takeaway cup outside the entrance to Âmago Café' : 'Um café para levar à entrada do Âmago Café'} loading="lazy" /><span>{t.spaceNote}</span></div><div className="space-copy"><Sun /><h2 id="space-title">{t.spaceHeading[0]}<br />{t.spaceHeading[1]}</h2><p>{t.spaceText}</p><a className="text-link" href={instagramUrl} target="_blank" rel="noreferrer">{t.spaceLink}</a></div></section>
+      <section className="space-section" id="space" aria-labelledby="space-title"><div className="space-photo"><img src="/images/amago-entrance.png" alt={language === 'en' ? 'A takeaway cup outside the entrance to Âmago Café' : 'Um café para levar à entrada do Âmago Café'} loading="lazy" /><span>{t.spaceNote}</span></div><div className="space-copy"><Sun /><h2 id="space-title">{t.spaceHeading[0]}<br />{t.spaceHeading[1]}</h2><p>{t.spaceText}</p><a className="text-link" href="/galeria.html">{t.spaceLink}</a></div></section>
 
-      <section className="instagram-section section-shell" aria-labelledby="instagram-title"><div className="instagram-intro"><Instagram size={25} strokeWidth={1.4} /><h2 id="instagram-title">{t.instagramHeading}</h2><p>{t.instagramText}</p><a className="text-link" href={instagramUrl} target="_blank" rel="noreferrer">{t.follow}</a></div><a href={instagramUrl} className="instagram-photo instagram-photo-one" target="_blank" rel="noreferrer" aria-label={t.follow}><img src="/images/amago-iced.png" alt={language === 'en' ? 'Iced coffee and matcha at Âmago' : 'Café e matcha gelados no Âmago'} loading="lazy" /><Instagram size={22} /></a><a href={instagramUrl} className="instagram-photo instagram-photo-two" target="_blank" rel="noreferrer" aria-label={t.follow}><img src="/images/amago-reading.png" alt={language === 'en' ? 'An Âmago coffee and an open book' : 'Um café do Âmago e um livro aberto'} loading="lazy" /><Instagram size={22} /></a></section>
+      <section className="instagram-section section-shell" aria-labelledby="photos-title"><div className="instagram-intro"><h2 id="photos-title">{t.galleryHeading}</h2><p>{t.galleryText}</p><a className="text-link" href="/galeria.html">{t.galleryLink}</a></div><a href="/galeria.html" className="instagram-photo instagram-photo-one" aria-label={t.galleryLink}><img src="/images/amago-iced.png" alt={language === 'en' ? 'Iced coffee and matcha at Âmago' : 'Café e matcha gelados no Âmago'} loading="lazy" /></a><a href="/galeria.html" className="instagram-photo instagram-photo-two" aria-label={t.galleryLink}><img src="/images/amago-reading.png" alt={language === 'en' ? 'An Âmago coffee and an open book' : 'Um café do Âmago e um livro aberto'} loading="lazy" /></a></section>
 
 
 
