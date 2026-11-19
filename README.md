@@ -4,6 +4,8 @@ A responsive café website built with React, TypeScript, and Vite. Includes Engl
 
 ## Run locally
 
+The home page is `/`. The gallery is a separate page at `/galeria.html`, linked from the shared navigation. Both HTML entry points are included in the production build and work on static hosting without route rewrites.
+
 ```sh
 npm install
 npm run dev
@@ -23,9 +25,9 @@ Browser checks use an installed Google Chrome. They cover desktop and mobile lay
 - Requested reference: [@amago.cafe](https://www.instagram.com/amago.cafe/). Instagram blocked direct access during implementation; the site does not claim to reproduce the account's exact logo, colours, photos, or menu.
 - The connection to Maputo and address at Avenida Mártires da Machava, 826, appeared in a [publicly indexed Instagram caption](https://socialauditor.io/profile/jeckcy.official). Confirm the address with the café before making this an official public website.
 - The understated gold and raw-material direction is informed by the café designer's [public description of the Maputo project](https://be.linkedin.com/in/agnieszka-michalec-aa074728).
-- Photography is illustrative Unsplash imagery, hosted locally in `public/images`. It does not depict Âmago. Disclosures appear alongside the imagery and menu. Source image IDs and a re-download script are in `scripts/download-assets.mjs`.
-- Menu selections are clearly marked as illustrative. No prices, unverified hours, phone numbers, booking promises, or testimonials are fabricated. The Instagram account is the destination for up-to-date information.
+- Photography and the three original menu images were supplied by the user from @amago.cafe. They are hosted locally in `public/images`. The five café photographs appear across the website and in an accessible gallery with enlargement and keyboard navigation.
+- Coffee, matcha, toast, and pastry selections and prices are transcribed in `src/menu.ts`. Prices and the R/G columns follow the supplied images; prices are displayed in Mozambican meticais (MT), as confirmed by the user. Cup volumes have not been inferred. Banana bread muffins are listed as Thursdays only. Original menu images can be opened from the menu section.
 
-Edit translations, menu inspiration, and destination links in `src/content.ts`. Replace photos in `public/images` with approved brand photography when available. Styles live in `src/styles.css`.
+Edit general translations and destination links in `src/content.ts`, menu data in `src/menu.ts`, and menu/gallery interactions in `src/MenuGallery.tsx`. Styles live in `src/styles.css`.
 
 This is a standalone React and TypeScript project. The production build output is `dist/`, ready for any static hosting provider.
