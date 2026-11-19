@@ -69,11 +69,11 @@ test('gallery opens, changes images, and returns focus when closed', async ({ pa
 test('gallery has its own page and links back to the home menu', async ({ page }, testInfo) => {
   await expect(page.locator('#gallery')).toHaveCount(0);
   if (testInfo.project.name === 'mobile') await page.getByRole('button', { name: 'Open navigation' }).click();
-  await page.getByRole('navigation').getByRole('link', { name: 'Gallery', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Gallery', exact: true }).click();
   await expect(page).toHaveURL(/\/galeria\.html$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gallery');
   if (testInfo.project.name === 'mobile') await page.getByRole('button', { name: 'Open navigation' }).click();
-  await page.getByRole('navigation').getByRole('link', { name: 'The menu' }).click();
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'The menu' }).click();
   await expect(page).toHaveURL(/\/#menu$/);
   await expect(page.getByRole('tabpanel')).toBeVisible();
 });
@@ -96,7 +96,7 @@ test('navigation works on mobile; tabs support arrow keys on desktop', async ({ 
     const toggle = page.locator('button[aria-controls="main-navigation"]');
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    await page.getByRole('navigation').getByRole('link', { name: 'The menu' }).click();
+    await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'The menu' }).click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(page).toHaveURL(/#menu$/);
   } else {
@@ -105,4 +105,28 @@ test('navigation works on mobile; tabs support arrow keys on desktop', async ({ 
     await expect(page.getByRole('tab', { name: 'Matcha bar' })).toBeFocused();
     await expect(page.getByRole('tabpanel')).toContainText('Coconut water matcha');
   }
+});
+
+test('mobile bottom tabs navigate both pages while keeping the hamburger', async ({ page }, testInfo) => {
+  const bar = page.getByRole('navigation', { name: 'Mobile navigation', exact: true });
+  if (testInfo.project.name === 'desktop') {
+    await expect(bar).toBeHidden();
+    return;
+  }
+  await expect(bar).toBeVisible();
+  await expect(bar.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'location');
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await bar.getByRole('link', { name: 'Menu', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page).toHaveURL(/#menu$/);
+  await expect(bar.getByRole('link', { name: 'Menu', exact: true })).toHaveAttribute('aria-current', 'location');
+  await bar.getByRole('link', { name: 'Gallery', exact: true }).click();
+  await expect(page).toHaveURL(/\/galeria\.html$/);
+  await expect(bar.getByRole('link', { name: 'Gallery', exact: true })).toHaveAttribute('aria-current', 'page');
+  await expect(page.getByRole('button', { name: 'Open navigation' })).toBeVisible();
+  await bar.getByRole('link', { name: 'Visit', exact: true }).click();
+  await expect(page).toHaveURL(/\/#visit$/);
+  await expect(bar.getByRole('link', { name: 'Visit', exact: true })).toHaveAttribute('aria-current', 'location');
+  await bar.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(bar.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'location');
 });

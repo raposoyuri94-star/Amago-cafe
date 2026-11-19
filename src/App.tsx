@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Instagram, MapPin, Menu, Plus, X } from 'lucide-react';
 import { copy, instagramUrl, mapsUrl, type Language } from './content';
 import { RealMenu, Gallery } from './MenuGallery';
+import { MobileNav } from './MobileNav';
 
 function Sun({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="40" r="15" stroke="currentColor" strokeWidth="1.5" />{Array.from({ length: 12 }, (_, i) => <path key={i} d="M40 7v10" transform={`rotate(${i * 30} 40 40)`} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />)}</svg>;
@@ -19,6 +20,16 @@ export default function App() {
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
   const t = copy[language];
   const isGallery = /^\/galeria(?:\.html)?\/?$/.test(window.location.pathname);
+
+  useEffect(() => {
+    // Cross-page section links must wait until React has rendered their target.
+    const target = window.location.hash.slice(1);
+    if (!target) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(target)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -88,5 +99,6 @@ export default function App() {
     </main>
 
     <footer className="site-footer section-shell"><div className="footer-main"><a href="#top" className="brand"><Wordmark /></a><p>{t.footer}</p><div className="footer-links"><a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram @amago.cafe"><Instagram size={22} /></a><a href={mapsUrl} target="_blank" rel="noreferrer" aria-label={t.directions}><MapPin size={22} /></a><a href="#top" className="text-link" aria-label={t.backTop}>{t.backTop}</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Âmago Café</span><span>{t.rights}</span><span>Maputo, Moçambique</span></div></footer>
+    <MobileNav language={language} isGallery={isGallery} onNavigate={() => setMobileOpen(false)} />
   </>;
 }
