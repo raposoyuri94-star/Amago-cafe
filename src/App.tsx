@@ -4,6 +4,7 @@ import { Instagram, MapPin, Menu, Plus, X } from 'lucide-react';
 import { copy, instagramUrl, mapsUrl, type Language } from './content';
 import { RealMenu, Gallery } from './MenuGallery';
 import { MobileNav } from './MobileNav';
+import { Terms } from './Terms';
 
 function Sun({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="40" r="15" stroke="currentColor" strokeWidth="1.5" />{Array.from({ length: 12 }, (_, i) => <path key={i} d="M40 7v10" transform={`rotate(${i * 30} 40 40)`} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />)}</svg>;
@@ -21,6 +22,8 @@ export default function App() {
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
   const t = copy[language];
   const isGallery = /\/galeria(?:\.html)?\/?$/.test(window.location.pathname);
+  const isTerms = /\/termos(?:\.html)?\/?$/.test(window.location.pathname);
+  const isSubpage = isGallery || isTerms;
 
   useEffect(() => {
     // Cross-page section links must wait until React has rendered their target.
@@ -34,9 +37,9 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = isGallery ? `${language === 'pt' ? 'Galeria' : 'Gallery'} — Âmago Café` : 'Âmago Café, Maputo';
+    document.title = isTerms ? `${language === 'pt' ? 'Termos e Condições' : 'Terms & Conditions'} — Âmago Café` : isGallery ? `${language === 'pt' ? 'Galeria' : 'Gallery'} — Âmago Café` : 'Âmago Café, Maputo';
     try { localStorage.setItem('amago-language-v2', language); } catch { /* Storage may be unavailable in private browsers. */ }
-  }, [language, isGallery]);
+  }, [language, isGallery, isTerms]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -55,18 +58,18 @@ export default function App() {
     <header className="site-header" id="top">
       <a className="brand" href={sitePath('/')}><Wordmark /></a>
       <nav className={mobileOpen ? 'main-nav is-open' : 'main-nav'} aria-label={language === 'en' ? 'Main navigation' : 'Navegação principal'} id="main-navigation">
-        {['essence', 'menu', 'visit'].map((id, index) => <a key={id} href={`${isGallery ? sitePath('/') : ''}#${id}`} onClick={() => setMobileOpen(false)}>{t.nav[index]}</a>)}
+        {['essence', 'menu', 'visit'].map((id, index) => <a key={id} href={`${isSubpage ? sitePath('/') : ''}#${id}`} onClick={() => setMobileOpen(false)}>{t.nav[index]}</a>)}
         <a href={sitePath('/galeria.html')} aria-current={isGallery ? 'page' : undefined} onClick={() => setMobileOpen(false)}>{language === 'pt' ? 'Galeria' : 'Gallery'}</a>
       </nav>
       <div className="header-actions">
         <div className="language-switch" aria-label={language === 'en' ? 'Language' : 'Idioma'}>{(['en', 'pt'] as const).map(lang => <button key={lang} onClick={() => { setLanguage(lang); setMobileOpen(false); }} aria-pressed={language === lang} aria-label={lang === 'en' ? 'English' : 'Português'}>{lang.toUpperCase()}</button>)}</div>
-        <a className="header-hello" href={`${isGallery ? sitePath('/') : ''}#visit`}>{t.hello}</a>
+        <a className="header-hello" href={`${isSubpage ? sitePath('/') : ''}#visit`}>{t.hello}</a>
         <button ref={mobileToggleRef} className="icon-button mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="main-navigation" aria-label={mobileOpen ? t.closeMenu : t.openMenu}>{mobileOpen ? <X /> : <Menu />}</button>
       </div>
     </header>
 
     <main id="main">
-      {isGallery ? <div className="gallery-page"><div className="section-shell"><a className="text-link" href={sitePath('/')}>{language === 'pt' ? 'Página inicial' : 'Home'}</a></div><Gallery language={language} page /></div> : <>
+      {isTerms ? <Terms language={language} /> : isGallery ? <div className="gallery-page"><div className="section-shell"><a className="text-link" href={sitePath('/')}>{language === 'pt' ? 'Página inicial' : 'Home'}</a></div><Gallery language={language} page /></div> : <>
       <section className="hero" aria-labelledby="hero-title">
         <img className="hero-image" src={sitePath('/images/amago-espresso.png')} alt={language === 'en' ? 'An Âmago cup beneath the espresso machine' : 'Uma chávena do Âmago na máquina de espresso'} fetchPriority="high" />
         <div className="hero-shade" />
@@ -99,7 +102,8 @@ export default function App() {
       </>}
     </main>
 
-    <footer className="site-footer section-shell"><div className="footer-main"><a href="#top" className="brand"><Wordmark /></a><p>{t.footer}</p><div className="footer-links"><a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram @amago.cafe"><Instagram size={22} /></a><a href={mapsUrl} target="_blank" rel="noreferrer" aria-label={t.directions}><MapPin size={22} /></a><a href="#top" className="text-link" aria-label={t.backTop}>{t.backTop}</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Âmago Café</span><span>{t.rights}</span><span>Maputo, Moçambique</span></div></footer>
-    <MobileNav language={language} isGallery={isGallery} onNavigate={() => setMobileOpen(false)} />
+    <footer className="site-footer section-shell"><div className="footer-main"><a href="#top" className="brand"><Wordmark /></a><p>{t.footer}</p><div className="footer-links"><a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram @amago.cafe"><Instagram size={22} /></a><a href={mapsUrl} target="_blank" rel="noreferrer" aria-label={t.directions}><MapPin size={22} /></a><a href="#top" className="text-link" aria-label={t.backTop}>{t.backTop}</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Âmago Café</span><span><a className="agency-credit" href="https://raposoyuri94-star.github.io/nexzo-agency-website/" target="_blank" rel="noopener noreferrer">{t.rights}</a></span><span>Maputo, Moçambique</span></div><div className="footer-legal"><a href={sitePath('/termos.html')} aria-current={isTerms ? 'page' : undefined}>{language === 'pt' ? 'Termos e Condições' : 'Terms & Conditions'}</a></div></footer>
+
+    <MobileNav language={language} isGallery={isGallery} isTerms={isTerms} onNavigate={() => setMobileOpen(false)} />
   </>;
 }

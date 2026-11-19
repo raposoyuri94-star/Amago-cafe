@@ -36,4 +36,6 @@ GitHub Pages address: `https://raposoyuri94-star.github.io/Amago-cafe/`. Reposit
 
 Edit general translations and destination links in `src/content.ts`, menu data in `src/menu.ts`, and menu/gallery interactions in `src/MenuGallery.tsx`. Styles live in `src/styles.css`.
 
+The Terms & Conditions page is `/termos.html`, with Portuguese and English text in `src/Terms.tsx`. It covers this informational website rather than online sales or reservations. The café should review this starter wording and its business details before publishing it as its terms. The content-reuse section follows the general rights-holder principles described by [WIPO](https://www.wipo.int/en/web/copyright/); it does not claim a legal review or specific regulatory compliance.
+
 This is a standalone React and TypeScript project. The production build output is `dist/`, ready for any static hosting provider.

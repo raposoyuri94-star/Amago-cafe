@@ -1,5 +1,20 @@
 @charset "UTF-8";
 
+.agency-credit{display:inline-block;padding-block:6px;color:#343c2f;font-size:13px;font-weight:600;text-decoration:none}
+.agency-credit:hover{color:#70623f}
+.footer-legal{margin-top:18px;text-align:center;font-size:11px;color:#626958}
+.footer-legal>a{display:inline-block;padding:8px}
+.footer-legal>a:hover{color:#343c2f}
+.terms-page{max-width:780px;padding-block:45px 80px}
+.terms-page>header{margin-top:32px}
+.terms-page h1{font-size:42px;letter-spacing:-1.4px;line-height:1.2}
+.terms-page h2{font-size:23px;letter-spacing:-.5px;margin-bottom:12px}
+.terms-page p{font-size:14px;color:#626958;line-height:1.85}
+.terms-page .terms-date{font-size:11px;margin:15px 0 25px}
+.terms-page>section{margin-top:34px}
+.terms-page>section>.text-link{margin-top:14px}
+@media(max-width:600px){.terms-page{padding-block:25px 45px}.terms-page h1{font-size:32px}.terms-page h2{font-size:21px}.terms-page p{font-size:13px}}
+
 .mobile-bottom-nav{display:none}
 @media(max-width:600px){
   body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}

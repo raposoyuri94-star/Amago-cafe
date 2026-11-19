@@ -5,15 +5,17 @@ import type { Language } from './content';
 
 type Destination = 'home' | 'menu' | 'gallery' | 'visit';
 
-export function MobileNav({ language, isGallery, onNavigate }: {
+export function MobileNav({ language, isGallery, isTerms = false, onNavigate }: {
   language: Language;
   isGallery: boolean;
+  isTerms?: boolean;
   onNavigate: () => void;
 }) {
-  const [active, setActive] = useState<Destination>(isGallery ? 'gallery' : 'home');
+  const [active, setActive] = useState<Destination | null>(isGallery ? 'gallery' : isTerms ? null : 'home');
+  const isSubpage = isGallery || isTerms;
 
   useEffect(() => {
-    if (isGallery) return;
+    if (isSubpage) return;
     let frame = 0;
     const update = () => {
       const position = window.innerHeight * 0.4;
@@ -32,13 +34,13 @@ export function MobileNav({ language, isGallery, onNavigate }: {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
-  }, [isGallery]);
+  }, [isSubpage]);
 
   const destinations = [
-    { id: 'home', label: language === 'pt' ? 'Início' : 'Home', href: `${isGallery ? sitePath('/') : ''}#top`, Icon: Home },
-    { id: 'menu', label: 'Menu', href: `${isGallery ? sitePath('/') : ''}#menu`, Icon: UtensilsCrossed },
+    { id: 'home', label: language === 'pt' ? 'Início' : 'Home', href: `${isSubpage ? sitePath('/') : ''}#top`, Icon: Home },
+    { id: 'menu', label: 'Menu', href: `${isSubpage ? sitePath('/') : ''}#menu`, Icon: UtensilsCrossed },
     { id: 'gallery', label: language === 'pt' ? 'Galeria' : 'Gallery', href: sitePath('/galeria.html'), Icon: Images },
-    { id: 'visit', label: language === 'pt' ? 'Visitar' : 'Visit', href: `${isGallery ? sitePath('/') : ''}#visit`, Icon: MapPin },
+    { id: 'visit', label: language === 'pt' ? 'Visitar' : 'Visit', href: `${isSubpage ? sitePath('/') : ''}#visit`, Icon: MapPin },
   ] as const;
 
   return <nav className="mobile-bottom-nav" aria-label={language === 'pt' ? 'Navegação móvel' : 'Mobile navigation'}>

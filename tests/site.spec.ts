@@ -13,6 +13,25 @@ test('Portuguese is the default for new visitors', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Português', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('terms open from the footer, keep their URL, translate, and link back to the menu', async ({ page }, testInfo) => {
+  await page.getByRole('link', { name: 'Terms & Conditions', exact: true }).click();
+  await expect(page).toHaveURL(/\/termos\.html$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Terms & Conditions');
+  await expect(page.getByRole('article')).toContainText('Mozambican meticais (MT)');
+  await page.reload();
+  await page.getByRole('button', { name: 'Português', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termos e Condições');
+  await expect(page.getByRole('article')).toContainText('Não permite fazer encomendas, pagamentos ou reservas online.');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  if (testInfo.project.name === 'mobile') {
+    await page.getByRole('navigation', { name: 'Navegação móvel', exact: true }).getByRole('link', { name: 'Menu', exact: true }).click();
+  } else {
+    await page.getByRole('navigation', { name: 'Navegação principal', exact: true }).getByRole('link', { name: 'O menu', exact: true }).click();
+  }
+  await expect(page).toHaveURL(/\/#menu$/);
+  await expect(page.getByRole('tabpanel')).toBeVisible();
+});
+
 test('loads every image, has no runtime errors or horizontal overflow', async ({ page }, testInfo) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));

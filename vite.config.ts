@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      input: { home: resolve('index.html'), gallery: resolve('galeria.html') },
+      input: { home: resolve('index.html'), gallery: resolve('galeria.html'), terms: resolve('termos.html') },
     },
   },
 });
