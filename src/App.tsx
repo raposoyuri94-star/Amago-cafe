@@ -70,7 +70,7 @@ export default function App() {
     </header>
 
     <main id="main">
-      {isTerms ? <Terms language={language} /> : isGallery ? <div className="gallery-page"><div className="section-shell"><a className="text-link" href={sitePath('/')}>{language === 'pt' ? 'Página inicial' : 'Home'}</a></div><Gallery language={language} page /></div> : <>
+      {isTerms ? <Terms language={language} /> : isGallery ? <div className="gallery-page"><Gallery language={language} page /></div> : <>
       <section className="hero" aria-labelledby="hero-title">
         <img className="hero-image" src={sitePath('/images/amago-espresso.png')} alt={language === 'en' ? 'An Âmago cup beneath the espresso machine' : 'Uma chávena do Âmago na máquina de espresso'} fetchPriority="high" />
         <div className="hero-shade" />
