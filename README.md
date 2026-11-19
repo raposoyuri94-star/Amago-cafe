@@ -20,6 +20,10 @@ npm run test:e2e
 
 Browser checks use an installed Google Chrome. They cover desktop and mobile layouts, asset loading, runtime errors, menu filters, dialog focus, language persistence, navigation, and FAQs. Screenshots are saved to the ignored `artifacts/` directory.
 
+## GitHub Actions
+
+The `Website checks` workflow runs on pushes, pull requests, and manual dispatch. It installs locked dependencies with Node.js 24, builds both pages, and runs the desktop/mobile browser tests in Chrome. Reports, failure traces, screenshots, and the production `dist/` output are available as workflow artifacts for 14 days. This workflow validates the website; hosting deployment is not configured.
+
 ## Content and imagery
 
 - Requested reference: [@amago.cafe](https://www.instagram.com/amago.cafe/). Instagram blocked direct access during implementation; the site does not claim to reproduce the account's exact logo, colours, photos, or menu.
