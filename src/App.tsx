@@ -7,8 +7,8 @@ function Sun({ className = '' }: { className?: string }) {
   return <svg className={className} viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="40" r="15" stroke="currentColor" strokeWidth="1.5" />{Array.from({ length: 12 }, (_, i) => <path key={i} d="M40 7v10" transform={`rotate(${i * 30} 40 40)`} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />)}</svg>;
 }
 
-function Wordmark({ className = '' }: { className?: string }) {
-  return <span className={`wordmark ${className}`} aria-label="Âmago Café">âmago<span className="wordmark-caption">café</span></span>;
+function Wordmark() {
+  return <img className="brand-logo" src="/images/amago-logo.png" alt="Âmago Café" width={207} height={60} />;
 }
 
 export default function App() {
