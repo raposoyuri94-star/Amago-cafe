@@ -31,7 +31,7 @@ export const copy = {
     contact: 'Message us on Instagram',
     faqTitle: 'Before you pop in',
     faqs: [
-      ['Where can I find the current menu?', 'Explore coffee, matcha, toast and pastries in the menu section above. You can also view the original menus.'],
+      ['Where can I find the current menu?', 'Explore coffee, matcha, toast and pastries in the menu section above, with prices in meticais.'],
       ['How can I check opening hours?', 'Check with our team using the contact link in the “Find us” section.'],
       ['Where is Âmago?', 'You’ll find us at Avenida Mártires da Machava, 826, in Maputo. Use “Get directions” to plan your route in Google Maps.'],
     ],
@@ -64,7 +64,7 @@ export const copy = {
     contact: 'Envie mensagem no Instagram',
     faqTitle: 'Antes de nos visitar',
     faqs: [
-      ['Onde posso encontrar o menu actual?', 'Explore café, matcha, tostas e pastelaria na secção de menu acima. Também pode consultar os menus originais.'],
+      ['Onde posso encontrar o menu actual?', 'Explore café, matcha, tostas e pastelaria na secção de menu acima, com preços em meticais.'],
       ['Como posso confirmar o horário?', 'Confirme com a equipa através do contacto na secção «Onde estamos».'],
       ['Onde fica o Âmago?', 'Estamos na Avenida Mártires da Machava, 826, em Maputo. Use “Como chegar” para planear o percurso no Google Maps.'],
     ],

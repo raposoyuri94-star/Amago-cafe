@@ -54,8 +54,9 @@ export default function App() {
   }, [mobileOpen]);
 
   return <>
+    <div id="top" aria-hidden="true" />
     <a className="skip-link" href="#main">{t.skip}</a>
-    <header className="site-header" id="top">
+    <header className="site-header">
       <a className="brand" href={sitePath('/')}><Wordmark /></a>
       <nav className={mobileOpen ? 'main-nav is-open' : 'main-nav'} aria-label={language === 'en' ? 'Main navigation' : 'Navegação principal'} id="main-navigation">
         {['essence', 'menu', 'visit'].map((id, index) => <a key={id} href={`${isSubpage ? sitePath('/') : ''}#${id}`} onClick={() => setMobileOpen(false)}>{t.nav[index]}</a>)}

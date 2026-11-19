@@ -13,6 +13,22 @@ test('Portuguese is the default for new visitors', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Português', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('top navigation stays visible while scrolling and section headings stay clear', async ({ page }) => {
+  await page.getByRole('link', { name: 'View menu', exact: true }).click();
+  await expect(page).toHaveURL(/#menu$/);
+  const header = page.locator('.site-header');
+  await expect.poll(async () => Math.round((await header.boundingBox())!.y)).toBe(0);
+  await expect.poll(async () => {
+    const headerBounds = (await header.boundingBox())!;
+    const titleBounds = (await page.getByRole('heading', { name: 'Menu', exact: true }).boundingBox())!;
+    return titleBounds.y >= headerBounds.y + headerBounds.height;
+  }).toBe(true);
+  await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
+  await expect.poll(async () => Math.round((await header.boundingBox())!.y)).toBe(0);
+  await page.getByRole('link', { name: 'Back to top', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
 test('terms open from the footer, keep their URL, translate, and link back to the menu', async ({ page }, testInfo) => {
   await page.getByRole('link', { name: 'Terms & Conditions', exact: true }).click();
   await expect(page).toHaveURL(/\/termos\.html$/);
@@ -47,24 +63,13 @@ test('loads every image, has no runtime errors or horizontal overflow', async ({
   await page.screenshot({ path: `artifacts/${testInfo.project.name}.png`, fullPage: true });
 });
 
-test('shows real menu prices, original menus, and Thursday pastry availability', async ({ page }) => {
+test('shows real menu prices and Thursday pastry availability without original-menu buttons', async ({ page }) => {
   await page.goto('./');
   await expect(page.getByRole('row', { name: 'Espresso 120 MT 200 MT', exact: true })).toBeVisible();
   await page.getByRole('tab', { name: 'Matcha bar' }).click();
   await expect(page.getByRole('tabpanel')).toContainText('Coconut water matcha');
   await expect(page.getByRole('row', { name: 'Matcha latte 350 MT 490 MT', exact: true })).toBeVisible();
-  const trigger = page.getByRole('button', { name: 'View original menu' });
-  await trigger.click();
-  const dialog = page.getByRole('dialog');
-  await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/menu-matcha\.png$/);
-  for (let i = 0; i < 5; i++) await page.keyboard.press('Tab');
-  expect(await page.evaluate(() => !!document.activeElement?.closest('dialog'))).toBe(true);
-  await page.keyboard.press('ArrowRight');
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/menu-food\.png$/);
-  await page.keyboard.press('Escape');
-  await expect(dialog).toHaveCount(0);
-  await expect(trigger).toBeFocused();
+  await expect(page.getByRole('button', { name: 'View original menu' })).toHaveCount(0);
   await page.getByRole('tab', { name: 'Pastries' }).click();
   await expect(page.getByRole('tabpanel')).toContainText('Thursdays only.');
   await expect(page.getByRole('row', { name: /Banana bread muffin/ })).toContainText('200');
@@ -105,7 +110,7 @@ test('switches and remembers language; FAQ expands; directions point to Maputo',
   await page.reload();
   await expect(page.getByRole('button', { name: 'Português', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.getByText('Onde posso encontrar o menu actual?', { exact: true }).click();
-  await expect(page.locator('details[open]')).toContainText('Também pode consultar os menus originais.');
+  await expect(page.locator('details[open]')).toContainText('preços em meticais.');
   await expect(page.getByRole('link', { name: 'Como chegar', exact: true }).first()).toHaveAttribute('href', /google\.com\/maps\/search.*Maputo/);
 });
 

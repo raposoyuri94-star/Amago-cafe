@@ -37,15 +37,9 @@ function PhotoViewer({ photos, start, language, close }: { photos: Photo[]; star
 
 export function RealMenu({ language }: { language: Language }) {
   const [category, setCategory] = useState<MenuCategory>('coffee');
-  const [showOriginal, setShowOriginal] = useState(false);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const categories = Object.keys(menu) as MenuCategory[];
   const selected = menu[category];
-  const originals: Photo[] = [
-    { src: sitePath('/images/menu-coffee.png'), pt: 'Menu de café', en: 'Coffee menu' },
-    { src: sitePath('/images/menu-matcha.png'), pt: 'Menu de matcha', en: 'Matcha menu' },
-    { src: sitePath('/images/menu-food.png'), pt: 'Menu de tostas e pastelaria', en: 'Toast and pastry menu' },
-  ];
   return <section className={`menu-section section-shell real-menu ${category === 'matcha' ? 'matcha-menu' : ''}`} id="menu" aria-labelledby="menu-title">
     <div className="section-heading"><div><h2 id="menu-title">{language === 'pt' ? 'Menu' : 'Menu'}</h2><p>{language === 'pt' ? 'Café, matcha, tostas e pastelaria. Preços em meticais (MT).' : 'Coffee, matcha, toast and pastries. Prices in Mozambican meticais (MT).'}</p></div></div>
     <div className="menu-tabs" role="tablist" aria-label={language === 'pt' ? 'Categorias do menu' : 'Menu categories'}>{categories.map((key, index) => <button ref={element => { tabs.current[index] = element; }} key={key} role="tab" id={`tab-${key}`} aria-selected={category === key} aria-controls="menu-panel" tabIndex={category === key ? 0 : -1} onClick={() => setCategory(key)} onKeyDown={event => {
@@ -61,8 +55,7 @@ export function RealMenu({ language }: { language: Language }) {
       <div className="menu-tables">{selected.groups.map(group => <div className="menu-group" key={group.pt}><h3>{group[language]}</h3><table><thead><tr><th scope="col">{language === 'pt' ? 'Produto' : 'Item'}</th><th scope="col">{group.sizes ? 'R' : language === 'pt' ? 'Preço' : 'Price'}</th>{group.sizes && <th scope="col">G</th>}</tr></thead><tbody>{group.rows.map(row => <tr key={row.name}><th scope="row">{language === 'en' ? englishNames[row.name] ?? row.name : row.name}{row.description && <small>{row.description[language]}</small>}</th><td>{row.prices[0]} MT</td>{group.sizes && <td>{row.prices[1] !== undefined ? `${row.prices[1]} MT` : '—'}</td>}</tr>)}</tbody></table></div>)}</div>
       <aside className="menu-photo"><img src={selected.photo} alt={language === 'pt' ? 'Um momento no Âmago Café' : 'A moment at Âmago Café'} loading="lazy" /><div><span>Âmago Café</span><p>{language === 'pt' ? 'Feito com alma. Servido com intenção.' : 'Made with soul. Served with intention.'}</p></div></aside>
     </div>
-    <div className="menu-bottom"><p className="menu-note">{language === 'pt' ? 'Preços em meticais (MT). Consulte a equipa sobre disponibilidade e alergénios.' : 'Prices in Mozambican meticais (MT). Ask our team about availability and allergens.'}</p><button className="text-link original-menu-button" onClick={() => setShowOriginal(true)}>{language === 'pt' ? 'Ver menu original' : 'View original menu'}</button></div>
-    {showOriginal && <PhotoViewer photos={originals} start={originals.findIndex(photo => photo.src === selected.original)} language={language} close={() => setShowOriginal(false)} />}
+    <div className="menu-bottom"><p className="menu-note">{language === 'pt' ? 'Preços em meticais (MT). Consulte a equipa sobre disponibilidade e alergénios.' : 'Prices in Mozambican meticais (MT). Ask our team about availability and allergens.'}</p></div>
   </section>;
 }
 

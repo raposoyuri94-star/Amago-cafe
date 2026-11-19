@@ -32,7 +32,7 @@ GitHub Pages address: `https://raposoyuri94-star.github.io/Amago-cafe/`. Reposit
 - The connection to Maputo and address at Avenida Mártires da Machava, 826, appeared in a [publicly indexed Instagram caption](https://socialauditor.io/profile/jeckcy.official). Confirm the address with the café before making this an official public website.
 - The understated gold and raw-material direction is informed by the café designer's [public description of the Maputo project](https://be.linkedin.com/in/agnieszka-michalec-aa074728).
 - Photography and the three original menu images were supplied by the user from @amago.cafe. They are hosted locally in `public/images`. The five café photographs appear across the website and in an accessible gallery with enlargement and keyboard navigation.
-- Coffee, matcha, toast, and pastry selections and prices are transcribed in `src/menu.ts`. Prices and the R/G columns follow the supplied images; prices are displayed in Mozambican meticais (MT), as confirmed by the user. Cup volumes have not been inferred. Banana bread muffins are listed as Thursdays only. Original menu images can be opened from the menu section.
+- Coffee, matcha, toast, and pastry selections and prices are transcribed in `src/menu.ts`. Prices and the R/G columns follow the supplied images; prices are displayed in Mozambican meticais (MT), as confirmed by the user. Cup volumes have not been inferred. Banana bread muffins are listed as Thursdays only. Original menu images are retained as source references; the website displays the transcribed menu.
 
 Edit general translations and destination links in `src/content.ts`, menu data in `src/menu.ts`, and menu/gallery interactions in `src/MenuGallery.tsx`. Styles live in `src/styles.css`.
 
