@@ -1,3 +1,4 @@
+import { sitePath } from './paths';
 import { useEffect, useRef, useState } from 'react';
 import { X, ZoomIn } from 'lucide-react';
 import type { Language } from './content';
@@ -41,9 +42,9 @@ export function RealMenu({ language }: { language: Language }) {
   const categories = Object.keys(menu) as MenuCategory[];
   const selected = menu[category];
   const originals: Photo[] = [
-    { src: '/images/menu-coffee.png', pt: 'Menu de café', en: 'Coffee menu' },
-    { src: '/images/menu-matcha.png', pt: 'Menu de matcha', en: 'Matcha menu' },
-    { src: '/images/menu-food.png', pt: 'Menu de tostas e pastelaria', en: 'Toast and pastry menu' },
+    { src: sitePath('/images/menu-coffee.png'), pt: 'Menu de café', en: 'Coffee menu' },
+    { src: sitePath('/images/menu-matcha.png'), pt: 'Menu de matcha', en: 'Matcha menu' },
+    { src: sitePath('/images/menu-food.png'), pt: 'Menu de tostas e pastelaria', en: 'Toast and pastry menu' },
   ];
   return <section className={`menu-section section-shell real-menu ${category === 'matcha' ? 'matcha-menu' : ''}`} id="menu" aria-labelledby="menu-title">
     <div className="section-heading"><div><h2 id="menu-title">{language === 'pt' ? 'Menu' : 'Menu'}</h2><p>{language === 'pt' ? 'Café, matcha, tostas e pastelaria. Preços em meticais (MT).' : 'Coffee, matcha, toast and pastries. Prices in Mozambican meticais (MT).'}</p></div></div>
@@ -66,11 +67,11 @@ export function RealMenu({ language }: { language: Language }) {
 }
 
 const gallery: Photo[] = [
-  { src: '/images/amago-team.png', pt: 'Feito com alma. Servido com intenção.', en: 'Made with soul. Served with intention.' },
-  { src: '/images/amago-reading.png', pt: 'Café para levar e um livro.', en: 'Takeaway coffee and a book.' },
-  { src: '/images/amago-iced.png', pt: 'Café e matcha para levar.', en: 'Coffee and matcha to go.' },
-  { src: '/images/amago-espresso.png', pt: 'Espresso no Âmago.', en: 'Espresso at Âmago.' },
-  { src: '/images/amago-entrance.png', pt: 'À porta do Âmago.', en: 'At the door of Âmago.' },
+  { src: sitePath('/images/amago-team.png'), pt: 'Feito com alma. Servido com intenção.', en: 'Made with soul. Served with intention.' },
+  { src: sitePath('/images/amago-reading.png'), pt: 'Café para levar e um livro.', en: 'Takeaway coffee and a book.' },
+  { src: sitePath('/images/amago-iced.png'), pt: 'Café e matcha para levar.', en: 'Coffee and matcha to go.' },
+  { src: sitePath('/images/amago-espresso.png'), pt: 'Espresso no Âmago.', en: 'Espresso at Âmago.' },
+  { src: sitePath('/images/amago-entrance.png'), pt: 'À porta do Âmago.', en: 'At the door of Âmago.' },
 ];
 
 export function Gallery({ language, page = false }: { language: Language; page?: boolean }) {

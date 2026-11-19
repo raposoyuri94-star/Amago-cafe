@@ -1,3 +1,4 @@
+import { sitePath } from './paths';
 import { useEffect, useState } from 'react';
 import { Home, Images, MapPin, UtensilsCrossed } from 'lucide-react';
 import type { Language } from './content';
@@ -34,10 +35,10 @@ export function MobileNav({ language, isGallery, onNavigate }: {
   }, [isGallery]);
 
   const destinations = [
-    { id: 'home', label: language === 'pt' ? 'Início' : 'Home', href: `${isGallery ? '/' : ''}#top`, Icon: Home },
-    { id: 'menu', label: 'Menu', href: `${isGallery ? '/' : ''}#menu`, Icon: UtensilsCrossed },
-    { id: 'gallery', label: language === 'pt' ? 'Galeria' : 'Gallery', href: '/galeria.html', Icon: Images },
-    { id: 'visit', label: language === 'pt' ? 'Visitar' : 'Visit', href: `${isGallery ? '/' : ''}#visit`, Icon: MapPin },
+    { id: 'home', label: language === 'pt' ? 'Início' : 'Home', href: `${isGallery ? sitePath('/') : ''}#top`, Icon: Home },
+    { id: 'menu', label: 'Menu', href: `${isGallery ? sitePath('/') : ''}#menu`, Icon: UtensilsCrossed },
+    { id: 'gallery', label: language === 'pt' ? 'Galeria' : 'Gallery', href: sitePath('/galeria.html'), Icon: Images },
+    { id: 'visit', label: language === 'pt' ? 'Visitar' : 'Visit', href: `${isGallery ? sitePath('/') : ''}#visit`, Icon: MapPin },
   ] as const;
 
   return <nav className="mobile-bottom-nav" aria-label={language === 'pt' ? 'Navegação móvel' : 'Mobile navigation'}>

@@ -1,3 +1,4 @@
+import { sitePath } from './paths';
 export type MenuCategory = 'coffee' | 'matcha' | 'toast' | 'pastry';
 export interface MenuRow { name: string; prices: [number, number?]; description?: { pt: string; en: string } }
 export interface MenuGroup { pt: string; en: string; sizes?: boolean; rows: MenuRow[] }
@@ -8,7 +9,7 @@ const syrup: MenuRow = { name: 'Opções de xaropes', prices: [40, 60], descript
 
 export const menu: Record<MenuCategory, MenuSection> = {
   coffee: {
-    pt: 'Café', en: 'Coffee', original: '/images/menu-coffee.png', photo: '/images/amago-espresso.png',
+    pt: 'Café', en: 'Coffee', original: sitePath('/images/menu-coffee.png'), photo: sitePath('/images/amago-espresso.png'),
     groups: [
       { pt: 'Quente', en: 'Hot', sizes: true, rows: [
         { name: 'Espresso', prices: [120, 200] }, { name: 'Americano', prices: [190, 300] },
@@ -28,7 +29,7 @@ export const menu: Record<MenuCategory, MenuSection> = {
     ],
   },
   matcha: {
-    pt: 'Matcha bar', en: 'Matcha bar', original: '/images/menu-matcha.png', photo: '/images/amago-iced.png',
+    pt: 'Matcha bar', en: 'Matcha bar', original: sitePath('/images/menu-matcha.png'), photo: sitePath('/images/amago-iced.png'),
     groups: [
       { pt: 'Quente', en: 'Hot', sizes: true, rows: [
         { name: 'Matcha latte', prices: [350, 490] }, { name: 'Matcha latte de baunilha', prices: [350, 490] },
@@ -44,7 +45,7 @@ export const menu: Record<MenuCategory, MenuSection> = {
     ],
   },
   toast: {
-    pt: 'Tostas', en: 'Toast', original: '/images/menu-food.png', photo: '/images/amago-reading.png',
+    pt: 'Tostas', en: 'Toast', original: sitePath('/images/menu-food.png'), photo: sitePath('/images/amago-reading.png'),
     groups: [{ pt: 'Tostas', en: 'Toast', rows: [
       { name: 'Queijo', prices: [200], description: { pt: 'Pão, manteiga e queijo', en: 'Bread, butter and cheese' } },
       { name: 'Mista', prices: [250], description: { pt: 'Pão, manteiga, queijo e fiambre de frango', en: 'Bread, butter, cheese and chicken ham' } },
@@ -53,7 +54,7 @@ export const menu: Record<MenuCategory, MenuSection> = {
     ] }],
   },
   pastry: {
-    pt: 'Pastelaria', en: 'Pastries', original: '/images/menu-food.png', photo: '/images/amago-entrance.png',
+    pt: 'Pastelaria', en: 'Pastries', original: sitePath('/images/menu-food.png'), photo: sitePath('/images/amago-entrance.png'),
     groups: [{ pt: 'Pastelaria', en: 'Pastries', rows: [
       { name: 'Biscoito', prices: [150], description: { pt: 'Biscoito artesanal com pepitas de chocolate', en: 'Artisanal chocolate chip cookie' } },
       { name: 'Matcha cookie', prices: [180], description: { pt: 'Biscoito artesanal de matcha com pepitas de chocolate branco', en: 'Artisanal matcha and white chocolate chip cookie' } },

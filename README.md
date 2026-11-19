@@ -22,7 +22,9 @@ Browser checks use an installed Google Chrome. They cover desktop and mobile lay
 
 ## GitHub Actions
 
-The `Website checks` workflow runs on pushes, pull requests, and manual dispatch. It installs locked dependencies with Node.js 24, builds both pages, and runs the desktop/mobile browser tests in Chrome. Reports, failure traces, screenshots, and the production `dist/` output are available as workflow artifacts for 14 days. This workflow validates the website; hosting deployment is not configured.
+The `Website checks` workflow runs on pushes, pull requests, and manual dispatch. It builds both pages for `/Amago-cafe/`, tests the production output in Chrome, and publishes successful pushes to `amago` on GitHub Pages. Reports, failure traces, screenshots, and `dist/` are available as workflow artifacts for 14 days.
+
+GitHub Pages address: `https://raposoyuri94-star.github.io/Amago-cafe/`. Repository Settings → Pages must use **GitHub Actions** as its source. Local development continues to use `/`; set `VITE_BASE_PATH=/Amago-cafe/` when building or previewing the GitHub Pages version locally.
 
 ## Content and imagery
 

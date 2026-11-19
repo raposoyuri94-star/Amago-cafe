@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByRole('button', { name: 'English', exact: true }).click();
 });
 
@@ -16,7 +16,7 @@ test('Portuguese is the default for new visitors', async ({ page }) => {
 test('loads every image, has no runtime errors or horizontal overflow', async ({ page }, testInfo) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Coffee and matcha.In Maputo.');
   for (const image of await page.locator('img').all()) {
     await image.scrollIntoViewIfNeeded();
@@ -29,7 +29,7 @@ test('loads every image, has no runtime errors or horizontal overflow', async ({
 });
 
 test('shows real menu prices, original menus, and Thursday pastry availability', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('row', { name: 'Espresso 120 MT 200 MT', exact: true })).toBeVisible();
   await page.getByRole('tab', { name: 'Matcha bar' }).click();
   await expect(page.getByRole('tabpanel')).toContainText('Coconut water matcha');
@@ -38,11 +38,11 @@ test('shows real menu prices, original menus, and Thursday pastry availability',
   await trigger.click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', '/images/menu-matcha.png');
+  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/menu-matcha\.png$/);
   for (let i = 0; i < 5; i++) await page.keyboard.press('Tab');
   expect(await page.evaluate(() => !!document.activeElement?.closest('dialog'))).toBe(true);
   await page.keyboard.press('ArrowRight');
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', '/images/menu-food.png');
+  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/menu-food\.png$/);
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -52,15 +52,15 @@ test('shows real menu prices, original menus, and Thursday pastry availability',
 });
 
 test('gallery opens, changes images, and returns focus when closed', async ({ page }) => {
-  await page.goto('/galeria.html');
+  await page.goto('./galeria.html');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Gallery');
   await page.reload();
   const trigger = page.getByRole('button', { name: 'Enlarge: Made with soul. Served with intention.' });
   await trigger.click();
   const dialog = page.getByRole('dialog');
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', '/images/amago-team.png');
+  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/amago-team\.png$/);
   await page.keyboard.press('ArrowRight');
-  await expect(dialog.getByRole('img')).toHaveAttribute('src', '/images/amago-reading.png');
+  await expect(dialog.getByRole('img')).toHaveAttribute('src', /\/images\/amago-reading\.png$/);
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
@@ -79,7 +79,7 @@ test('gallery has its own page and links back to the home menu', async ({ page }
 });
 
 test('switches and remembers language; FAQ expands; directions point to Maputo', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
   await page.getByRole('button', { name: 'Português', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Café e matcha.Em Maputo.');
@@ -91,7 +91,7 @@ test('switches and remembers language; FAQ expands; directions point to Maputo',
 });
 
 test('navigation works on mobile; tabs support arrow keys on desktop', async ({ page }, testInfo) => {
-  await page.goto('/');
+  await page.goto('./');
   if (testInfo.project.name === 'mobile') {
     const toggle = page.locator('button[aria-controls="main-navigation"]');
     await toggle.click();

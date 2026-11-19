@@ -1,3 +1,4 @@
+import { sitePath } from './paths';
 import { useEffect, useRef, useState } from 'react';
 import { Instagram, MapPin, Menu, Plus, X } from 'lucide-react';
 import { copy, instagramUrl, mapsUrl, type Language } from './content';
@@ -9,7 +10,7 @@ function Sun({ className = '' }: { className?: string }) {
 }
 
 function Wordmark() {
-  return <img className="brand-logo" src="/images/amago-logo.png" alt="Âmago Café" width={207} height={60} />;
+  return <img className="brand-logo" src={sitePath('/images/amago-logo.png')} alt="Âmago Café" width={207} height={60} />;
 }
 
 export default function App() {
@@ -19,7 +20,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
   const t = copy[language];
-  const isGallery = /^\/galeria(?:\.html)?\/?$/.test(window.location.pathname);
+  const isGallery = /\/galeria(?:\.html)?\/?$/.test(window.location.pathname);
 
   useEffect(() => {
     // Cross-page section links must wait until React has rendered their target.
@@ -52,22 +53,22 @@ export default function App() {
   return <>
     <a className="skip-link" href="#main">{t.skip}</a>
     <header className="site-header" id="top">
-      <a className="brand" href="/"><Wordmark /></a>
+      <a className="brand" href={sitePath('/')}><Wordmark /></a>
       <nav className={mobileOpen ? 'main-nav is-open' : 'main-nav'} aria-label={language === 'en' ? 'Main navigation' : 'Navegação principal'} id="main-navigation">
-        {['essence', 'menu', 'visit'].map((id, index) => <a key={id} href={`${isGallery ? '/' : ''}#${id}`} onClick={() => setMobileOpen(false)}>{t.nav[index]}</a>)}
-        <a href="/galeria.html" aria-current={isGallery ? 'page' : undefined} onClick={() => setMobileOpen(false)}>{language === 'pt' ? 'Galeria' : 'Gallery'}</a>
+        {['essence', 'menu', 'visit'].map((id, index) => <a key={id} href={`${isGallery ? sitePath('/') : ''}#${id}`} onClick={() => setMobileOpen(false)}>{t.nav[index]}</a>)}
+        <a href={sitePath('/galeria.html')} aria-current={isGallery ? 'page' : undefined} onClick={() => setMobileOpen(false)}>{language === 'pt' ? 'Galeria' : 'Gallery'}</a>
       </nav>
       <div className="header-actions">
         <div className="language-switch" aria-label={language === 'en' ? 'Language' : 'Idioma'}>{(['en', 'pt'] as const).map(lang => <button key={lang} onClick={() => { setLanguage(lang); setMobileOpen(false); }} aria-pressed={language === lang} aria-label={lang === 'en' ? 'English' : 'Português'}>{lang.toUpperCase()}</button>)}</div>
-        <a className="header-hello" href={`${isGallery ? '/' : ''}#visit`}>{t.hello}</a>
+        <a className="header-hello" href={`${isGallery ? sitePath('/') : ''}#visit`}>{t.hello}</a>
         <button ref={mobileToggleRef} className="icon-button mobile-toggle" onClick={() => setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="main-navigation" aria-label={mobileOpen ? t.closeMenu : t.openMenu}>{mobileOpen ? <X /> : <Menu />}</button>
       </div>
     </header>
 
     <main id="main">
-      {isGallery ? <div className="gallery-page"><div className="section-shell"><a className="text-link" href="/">{language === 'pt' ? 'Página inicial' : 'Home'}</a></div><Gallery language={language} page /></div> : <>
+      {isGallery ? <div className="gallery-page"><div className="section-shell"><a className="text-link" href={sitePath('/')}>{language === 'pt' ? 'Página inicial' : 'Home'}</a></div><Gallery language={language} page /></div> : <>
       <section className="hero" aria-labelledby="hero-title">
-        <img className="hero-image" src="/images/amago-espresso.png" alt={language === 'en' ? 'An Âmago cup beneath the espresso machine' : 'Uma chávena do Âmago na máquina de espresso'} fetchPriority="high" />
+        <img className="hero-image" src={sitePath('/images/amago-espresso.png')} alt={language === 'en' ? 'An Âmago cup beneath the espresso machine' : 'Uma chávena do Âmago na máquina de espresso'} fetchPriority="high" />
         <div className="hero-shade" />
         <div className="hero-content">
           <p className="hero-location"><span />{t.location}</p>
@@ -86,9 +87,9 @@ export default function App() {
 
       <RealMenu language={language} />
 
-      <section className="space-section" id="space" aria-labelledby="space-title"><div className="space-photo"><img src="/images/amago-entrance.png" alt={language === 'en' ? 'A takeaway cup outside the entrance to Âmago Café' : 'Um café para levar à entrada do Âmago Café'} loading="lazy" /><span>{t.spaceNote}</span></div><div className="space-copy"><Sun /><h2 id="space-title">{t.spaceHeading[0]}<br />{t.spaceHeading[1]}</h2><p>{t.spaceText}</p><a className="text-link" href="/galeria.html">{t.spaceLink}</a></div></section>
+      <section className="space-section" id="space" aria-labelledby="space-title"><div className="space-photo"><img src={sitePath('/images/amago-entrance.png')} alt={language === 'en' ? 'A takeaway cup outside the entrance to Âmago Café' : 'Um café para levar à entrada do Âmago Café'} loading="lazy" /><span>{t.spaceNote}</span></div><div className="space-copy"><Sun /><h2 id="space-title">{t.spaceHeading[0]}<br />{t.spaceHeading[1]}</h2><p>{t.spaceText}</p><a className="text-link" href={sitePath('/galeria.html')}>{t.spaceLink}</a></div></section>
 
-      <section className="instagram-section section-shell" aria-labelledby="photos-title"><div className="instagram-intro"><h2 id="photos-title">{t.galleryHeading}</h2><p>{t.galleryText}</p><a className="text-link" href="/galeria.html">{t.galleryLink}</a></div><a href="/galeria.html" className="instagram-photo instagram-photo-one" aria-label={t.galleryLink}><img src="/images/amago-iced.png" alt={language === 'en' ? 'Iced coffee and matcha at Âmago' : 'Café e matcha gelados no Âmago'} loading="lazy" /></a><a href="/galeria.html" className="instagram-photo instagram-photo-two" aria-label={t.galleryLink}><img src="/images/amago-reading.png" alt={language === 'en' ? 'An Âmago coffee and an open book' : 'Um café do Âmago e um livro aberto'} loading="lazy" /></a></section>
+      <section className="instagram-section section-shell" aria-labelledby="photos-title"><div className="instagram-intro"><h2 id="photos-title">{t.galleryHeading}</h2><p>{t.galleryText}</p><a className="text-link" href={sitePath('/galeria.html')}>{t.galleryLink}</a></div><a href={sitePath('/galeria.html')} className="instagram-photo instagram-photo-one" aria-label={t.galleryLink}><img src={sitePath('/images/amago-iced.png')} alt={language === 'en' ? 'Iced coffee and matcha at Âmago' : 'Café e matcha gelados no Âmago'} loading="lazy" /></a><a href={sitePath('/galeria.html')} className="instagram-photo instagram-photo-two" aria-label={t.galleryLink}><img src={sitePath('/images/amago-reading.png')} alt={language === 'en' ? 'An Âmago coffee and an open book' : 'Um café do Âmago e um livro aberto'} loading="lazy" /></a></section>
 
 
 

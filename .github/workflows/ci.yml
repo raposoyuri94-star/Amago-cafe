@@ -32,12 +32,18 @@ jobs:
 
       - name: Build website
         run: npm run build
+        env:
+          VITE_BASE_PATH: /Amago-cafe/
 
       - name: Install Chrome and browser dependencies
         run: npx playwright install --with-deps chrome
 
       - name: Run desktop and mobile browser tests
         run: npm run test:e2e
+        env:
+          PLAYWRIGHT_BASE_PATH: /Amago-cafe/
+          PLAYWRIGHT_PREVIEW: '1'
+          VITE_BASE_PATH: /Amago-cafe/
 
       - name: Upload test report and screenshots
         if: ${{ !cancelled() }}
@@ -51,6 +57,12 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      - name: Upload GitHub Pages website
+        if: github.ref == 'refs/heads/amago' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+
       - name: Upload production website
         uses: actions/upload-artifact@v5
         with:
@@ -58,3 +70,24 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 14
+
+  deploy:
+    name: Publish GitHub Pages
+    needs: build-and-test
+    if: github.ref == 'refs/heads/amago' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v5
